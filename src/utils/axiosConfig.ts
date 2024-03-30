@@ -6,8 +6,7 @@ export function axiosConfig() {
   const { accessToken, refreshAccessToken } = getDataCookie();
 
   const instance = axios.create({
-    // baseURL: process.env.HOST_EMPLOATTEND_SERVICE,
-    baseURL: "http://localhost:5000/",
+    baseURL: process.env.NEXT_PUBLIC_HOST_EMPLOATTEND_SERVICE,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
