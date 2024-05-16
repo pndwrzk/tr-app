@@ -1,10 +1,9 @@
 "use client";
 
-import { login } from "@/services/authTrService";
-import { StoreCookie } from "@/utils/configCookie";
+import { register as regis } from "@/services/authTrService";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { loginRequestBody } from "@/types/authTrTypes";
+import { registerRequestBody } from "@/types/authTrTypes";
 import { useState } from "react";
 import Loading from "@/components/loading";
 import Link from "next/link";
@@ -17,20 +16,19 @@ export default function Login() {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm<loginRequestBody>({ mode: "all" });
+  } = useForm<registerRequestBody>({ mode: "all" });
 
-  const onSubmit = async (formValues: loginRequestBody) => {
+  const onSubmit = async (formValues: registerRequestBody) => {
     setIsLoading(true);
-    const result = await login(formValues);
+    const result = await regis(formValues);
     const resultStatus = result.status;
     const resultData = result.data;
     if (resultStatus !== 200) {
       setErrorMessage(resultData.message);
     } else {
-      StoreCookie(resultData.data);
-      router.push("/");
+      router.push("/login");
     }
-    setIsLoading(false);
+    setIsLoading(true);
   };
   return (
     <div className="bg-gray-100 flex h-screen items-center justify-center p-4">
@@ -41,7 +39,7 @@ export default function Login() {
           </h1>
 
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Sign up to your account
           </h2>
           {errorMessage && (
             <div
@@ -64,6 +62,26 @@ export default function Login() {
           )}
 
           <div className="space-y-6 mt-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Name
+              </label>
+              <div className="mt-1">
+                <input
+                  className="text-black px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm  sm:text-sm"
+                  {...register("name", {
+                    required: {
+                      value: true,
+                      message: "This field cannot be empty",
+                    },
+                  })}
+                />
+
+                <span className="text-red-500 text-sm">
+                  {errors.name?.message}
+                </span>
+              </div>
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Email
@@ -116,19 +134,18 @@ export default function Login() {
                 onClick={handleSubmit(onSubmit)}
                 className="flex w-full justify-center rounded-md border border-transparent bg-[#0060AC] py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2"
               >
-                {isLoading && <Loading />}
-                Login
+                {isLoading && <Loading />} Register
               </button>
             </div>
             <div className="flex justify-center items-center mt-4">
               <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
                 <span className="ml-2">
-                  You don't have an account?
+                  You have an account?
                   <Link
-                    href="/register"
-                    className="text-xs ml-2 text-blue-500 font-semibold"
+                    href="/login"
+                    className="text-xs ml-2 text-blue-500 font-semibold "
                   >
-                    Register now &rarr;
+                    Login &rarr;
                   </Link>
                 </span>
               </p>

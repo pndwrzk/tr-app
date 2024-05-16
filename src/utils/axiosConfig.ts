@@ -6,7 +6,7 @@ export function axiosConfig() {
   const { accessToken, refreshAccessToken } = getDataCookie();
 
   const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_HOST_EMPLOATTEND_SERVICE,
+    baseURL: process.env.NEXT_PUBLIC_HOST_TR_SERVICE,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
@@ -24,7 +24,7 @@ export function axiosConfig() {
             throw new Error("No refresh token available");
           }
           const response = await axios.post(
-            "http://localhost:5000/refersh-token",
+            `${process.env.NEXT_PUBLIC_HOST_TR_SERVICE}/refersh-token`,
             {
               refresh_token: refreshToken,
             }

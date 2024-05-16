@@ -9,6 +9,12 @@ export type loginRequestBody = {
   password: string;
 };
 
+export type registerRequestBody = {
+  email: string;
+  password: string;
+  name: string;
+};
+
 type dataToken = {
   access_token: string;
   refresh_access_token: string;
