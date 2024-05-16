@@ -1,5 +1,5 @@
 "use client";
-
+// react/no-unescaped-entities
 import { register as regis } from "@/services/authTrService";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
