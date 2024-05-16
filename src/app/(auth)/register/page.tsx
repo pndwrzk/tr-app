@@ -145,7 +145,7 @@ export default function Login() {
                     href="/login"
                     className="text-xs ml-2 text-blue-500 font-semibold "
                   >
-                    Login &rarr;
+                    Login
                   </Link>
                 </span>
               </p>

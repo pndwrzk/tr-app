@@ -128,7 +128,7 @@ export default function Login() {
                     href="/register"
                     className="text-xs ml-2 text-blue-500 font-semibold"
                   >
-                    Register now &rarr;
+                    Register now
                   </Link>
                 </span>
               </p>
