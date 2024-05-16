@@ -24,7 +24,7 @@ export function axiosConfig() {
             throw new Error("No refresh token available");
           }
           const response = await axios.post(
-            `${process.env.NEXT_PUBLIC_HOST_TR_SERVICE}/refersh-token`,
+            `${process.env.NEXT_PUBLIC_HOST_TR_SERVICE}refersh-token`,
             {
               refresh_token: refreshToken,
             }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import ClientCaptcha from "react-client-captcha";
+
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { bodyFormcustomer } from "@/types/customerTrTypes";
@@ -32,11 +32,11 @@ export default function Form({ params }: any) {
   const Submit = async (value: bodyFormcustomer) => {
     setIsLoading(true);
     let result;
-    const { captcha, ...newObj } = value;
+
     if (isCreate) {
-      result = await addCustomer(newObj);
+      result = await addCustomer(value);
     } else {
-      result = await updateCustomerById(Number(id), newObj);
+      result = await updateCustomerById(Number(id), value);
     }
 
     const resultStatus = result.status;
@@ -209,33 +209,6 @@ export default function Form({ params }: any) {
             />
             <span className="text-red-500 text-sm">
               {errors.email?.message}
-            </span>
-          </div>
-
-          <div className="mt-4">
-            <label className="block ">Captcha</label>
-            <div className="flex flex-row gap-5">
-              <div>
-                <input
-                  {...register("captcha", {
-                    required: {
-                      value: true,
-                      message: "This field cannot be empty",
-                    },
-                    validate: (value) =>
-                      value === captchaCode || "Wrong code Captcha",
-                  })}
-                  className="w-full rounded bg-white p-2 border border-gray-300 block mt-1 "
-                />
-              </div>
-              <div className="mt-1">
-                <ClientCaptcha
-                  captchaCode={(code: string) => setCaptchaCode(code)}
-                />
-              </div>
-            </div>
-            <span className="text-red-500 text-sm">
-              {errors.captcha?.message}
             </span>
           </div>
 
