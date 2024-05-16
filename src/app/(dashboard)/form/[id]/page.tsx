@@ -102,9 +102,13 @@ export default function Form({ params }: any) {
                     value: true,
                     message: "This field cannot be empty",
                   },
+                  minLength: {
+                    value: 16,
+                    message: "Must be exactly 16 digits",
+                  },
                   maxLength: {
                     value: 16,
-                    message: "Maximum length is 16 digits",
+                    message: "Must be exactly 16 digits",
                   },
                   pattern: {
                     value: /^[0-9]*$/,

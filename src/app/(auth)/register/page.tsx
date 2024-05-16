@@ -28,7 +28,7 @@ export default function Register() {
     } else {
       router.push("/login");
     }
-    setIsLoading(true);
+    setIsLoading(false);
   };
 
   return (
