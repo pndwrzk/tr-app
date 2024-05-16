@@ -16,7 +16,7 @@ export default function Register() {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm<registerRequestBody>({ mode: "all" });
+  } = useForm<registerRequestBody>({ mode: "onSubmit" });
 
   const onSubmit = async (formValues: registerRequestBody) => {
     setIsLoading(true);

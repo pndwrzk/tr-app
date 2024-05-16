@@ -18,7 +18,7 @@ export default function Login() {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm<loginRequestBody>({ mode: "all" });
+  } = useForm<loginRequestBody>({ mode: "onSubmit" });
 
   const onSubmit = async (formValues: loginRequestBody) => {
     setIsLoading(true);
