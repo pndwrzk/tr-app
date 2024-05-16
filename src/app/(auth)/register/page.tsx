@@ -8,7 +8,7 @@ import { useState } from "react";
 import Loading from "@/components/loading";
 import Link from "next/link";
 
-export default function Login() {
+export default function Register() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();

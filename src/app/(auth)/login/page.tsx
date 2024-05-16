@@ -1,5 +1,5 @@
 "use client";
-
+// react/no-unescaped-entities
 import { login } from "@/services/authTrService";
 import { StoreCookie } from "@/utils/configCookie";
 import { useForm } from "react-hook-form";
@@ -123,7 +123,7 @@ export default function Login() {
             <div className="flex justify-center items-center mt-4">
               <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
                 <span className="ml-2">
-                  You don't have an account?
+                  You dont have an account?
                   <Link
                     href="/register"
                     className="text-xs ml-2 text-blue-500 font-semibold"
