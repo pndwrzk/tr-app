@@ -6,7 +6,7 @@ import {
   deleteCustomer,
   deleteCustomerBulk,
 } from "@/services/customerTrService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { customerData } from "@/types/customerTrTypes";
 import Loading from "@/components/loading";
 
@@ -21,7 +21,7 @@ export default function Dashboard() {
     setCustomers(respone?.data.data);
   };
 
-  const handleCheckUnCheck = (e: any) => {
+  const handleCheckUnCheck = (e: ChangeEvent<HTMLInputElement>) => {
     const arrayId: number[] = [];
     const checked = e.target.checked;
     if (checked) {
@@ -32,7 +32,7 @@ export default function Dashboard() {
     setIdBulk(arrayId);
   };
 
-  const checkCustomer = (e: any) => {
+  const checkCustomer = (e: ChangeEvent<HTMLInputElement>) => {
     let newArray: number[] = [];
     const checked = e.target.checked;
     const value = parseInt(e.target.value);

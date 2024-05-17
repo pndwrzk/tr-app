@@ -14,4 +14,5 @@ export type bodyFormcustomer = {
   id: number;
   identity_card: string;
   phone_number: string;
+  captcha: string;
 };

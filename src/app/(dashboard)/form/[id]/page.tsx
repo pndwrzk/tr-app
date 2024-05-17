@@ -11,16 +11,25 @@ import {
   updateCustomerById,
 } from "@/services/customerTrService";
 import { useRouter } from "next/navigation";
+import { generateCaptcha } from "@/utils/generateCaptcha";
+import { BsArrowCounterclockwise } from "react-icons/bs";
 
 import Loading from "@/components/loading";
 
-export default function Form({ params }: any) {
+type Props = {
+  params: {
+    id: any;
+  };
+};
+
+export default function Form({ params }: Props) {
   const router = useRouter();
   const { id } = params;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCreate, setIsCreate] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [captcha, setcaptcha] = useState<string>("");
   const {
     formState: { errors },
     register,
@@ -30,12 +39,13 @@ export default function Form({ params }: any) {
 
   const Submit = async (value: bodyFormcustomer) => {
     setIsLoading(true);
-    let result;
 
+    const { captcha, ...newObj } = value;
+    let result;
     if (isCreate) {
-      result = await addCustomer(value);
+      result = await addCustomer(newObj);
     } else {
-      result = await updateCustomerById(Number(id), value);
+      result = await updateCustomerById(Number(id), newObj);
     }
 
     const resultStatus = result.status;
@@ -67,6 +77,15 @@ export default function Form({ params }: any) {
     }
   }, [id]);
 
+  useEffect(() => {
+    handleGenerateCaptcha();
+  }, []);
+
+  const handleGenerateCaptcha = () => {
+    const captcha = generateCaptcha(4);
+    setcaptcha(captcha);
+  };
+
   return (
     <div className="p-10 text-black">
       <h1 className="mb-8 font-extrabold text-4xl">
@@ -92,9 +111,9 @@ export default function Form({ params }: any) {
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <form>
+        <div>
           <div>
-            <label className="block">No KTP</label>
+            <label className="block font-semibold">No KTP</label>
             <input
               {...register("identity_card", {
                 required: {
@@ -122,7 +141,7 @@ export default function Form({ params }: any) {
           </div>
 
           <div className="mt-4">
-            <label className="block ">Nama Lengkap</label>
+            <label className="block font-semibold ">Nama Lengkap</label>
             <input
               {...register("full_name", {
                 required: {
@@ -177,7 +196,7 @@ export default function Form({ params }: any) {
             </span>
           </div>
           <div className="mt-4">
-            <label className="block ">No HP</label>
+            <label className="block font-semibold ">No HP</label>
             <input
               {...register("phone_number", {
                 required: {
@@ -196,7 +215,7 @@ export default function Form({ params }: any) {
             </span>
           </div>
           <div className="mt-4">
-            <label className="block">Email</label>
+            <label className="block font-semibold ">Email</label>
             <input
               {...register("email", {
                 required: {
@@ -212,6 +231,42 @@ export default function Form({ params }: any) {
             />
             <span className="text-red-500 text-sm">
               {errors.email?.message}
+            </span>
+          </div>
+          <div className="mt-4">
+            <label className="block font-semibold">Captcha</label>
+            <div className="flex flex-row gap-2">
+              <div>
+                {" "}
+                <input
+                  {...register("captcha", {
+                    required: {
+                      value: true,
+                      message: "This field cannot be empty",
+                    },
+                    validate: (value) => value === captcha || "Wrong Captcha",
+                  })}
+                  className="w-full rounded bg-white p-2 border border-gray-300 block mt-1 "
+                />
+              </div>
+              <div className="flex flex-row gap-1">
+                <div>
+                  <button className="mt-1 flex items-center justify-center px-8 border   text-base font-medium rounded text-black  bg-gradient-to-tr from-amber-200 via-amber-200 to-red-400  md:py-2  md:px-10 ">
+                    {captcha}
+                  </button>
+                </div>
+                <div>
+                  <button
+                    onClick={handleGenerateCaptcha}
+                    className="mt-1 flex items-center justify-center px-8 border   text-base font-medium rounded text-white  bg-black  md:py-2  md:px-4 hover:bg-white hover:text-black "
+                  >
+                    <BsArrowCounterclockwise className="text-[23px]" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <span className="text-red-500 text-sm">
+              {errors.captcha?.message}
             </span>
           </div>
 
@@ -243,7 +298,7 @@ export default function Form({ params }: any) {
               <span className="ml-1 font-bold text-lg">Back</span>
             </Link>
           </div>
-        </form>
+        </div>
 
         <aside className="">
           <div className="bg-gray-100 p-8 rounded">
